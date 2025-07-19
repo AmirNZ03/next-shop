@@ -1,0 +1,14 @@
+<p className='font-bold ml-60 mt-3 max-w-[40rem]'>2 دیدگاه برای کپسول قهوه SETpresso سازگار با دستگاههای نسپرسو _ قرمز 10 عددی ( Sumatra ) LIMITED EDITION</p>
+  <div className="flex mt-32 ">
+  <div className="flex text-amber-300 mt-2 ">
+                            <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+                        </div>
+                            <div className="flex">
+      <div className="flex flex-col">
+        <p className='flex'>farnazsharafi0808 – 13 تیر 1403</p>
+        <p className='text-gray-500 max-w-[50rem] text-right'>محصول خیلی خوبیه
+تنها کپسول ایرانی که با دستگاه نسپرسو خیلی خوب سازگاره????????</p>
+      </div>
+      <Image src='/user.jpg' width={15} height={15} alt='user' className='rounded-full w-12 h-12 object-cover'/>
+    </div>
+  </div>

@@ -2,8 +2,12 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 
 export default async function Products2() {
+  const BASE_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3000"
+    : process.env.NEXT_PUBLIC_SITE_URL;
   
-    const res = await fetch(`${process.env.BASE_URL}/api/products/pro2`, { cache: "no-store" });
+    const res = await fetch(`${BASE_URL}/api/products/pro2`, { cache: "no-store" });
     const datas = await res.json();
 
     return (

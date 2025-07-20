@@ -12,6 +12,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useParams, usePathname } from 'next/navigation';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import CartSidebar from '@/app/CartSidebar';
 
 export default function page() {
   const images = [
@@ -29,10 +30,14 @@ export default function page() {
           setIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
         };
   const [changevalue,setChangeValue]=useState(1)
+  const[isOpen,setIsopen]=useState(false)
   const[board,setBoard]=useState(true)
   const[tab,setTab]=useState('description')
     const[product,setProduct]=useState([])
     const pathname = usePathname();
+const [cartItems, setCartItems] = useState([
+  { name: 'محصول تست', price: 10000 }
+]);
 
     const params = useParams();
 const id = params.id;
@@ -105,6 +110,12 @@ console.log("id",id);
 <p className='flex justify-end mt-3'>موجود در انبار</p>
 <div className='flex gap-2 mt-9 justify-end'>
   <button className='bg-green-600 text-white h-10 w-36 font-bold hover:bg-amber-950'>افزودن به سبد خرید</button>
+{/* <CartSidebar
+  isOpen={isOpen}
+  onClose={() => setIsopen(false)}
+  cartItems={cartItems}
+/> */}
+
   <div className="flex">
 <button className='w-6' style={{border:'1px solid gray'}}onClick={increase}>+</button>
 <input type="text" className='w-9 text-center' style={{border:'1px solid gray'}} value={changevalue<1?'1':changevalue}   readOnly

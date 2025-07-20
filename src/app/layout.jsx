@@ -14,8 +14,13 @@ import { IoIosArrowDown } from "react-icons/io";
 import Image from "next/image";
 import { useState } from "react";
 import Login from "./Login";
+import CartSidebar from "./CartSidebar";
 export default function RootLayout({ children }) {
   const [show,setShow]=useState(false)
+  const [cartItems, setCartItems] = useState([
+    { name: 'محصول تست', price: 10000 }
+  ]);
+  const[isOpen,setIsopen]=useState(false)
 
   return (
     <html lang="en">
@@ -24,12 +29,17 @@ export default function RootLayout({ children }) {
           <nav className="mt-10">
             <ul className="flex no-underline list-none justify-evenly ">
               <li className="bg-black w-12 h-12 rounded-full relative -mt-2">
-                <button className="bg-white w-10 h-10 rounded-full relative ml-1 mt-1" >
+                <button className="bg-white w-10 h-10 rounded-full relative ml-1 mt-1" onClick={()=>setIsopen(true)} >
                   <SlBasket className="text-2xl ml-1 -mt-4 absolute" />
 <div className="bg-white top-0 left-0 -ml-2 w-4 h-4 rounded-full  absolute ">
   <p className="text-sm   ">0</p>
 </div>
                 </button>
+                <CartSidebar
+                  isOpen={isOpen}
+                  onClose={() => setIsopen(false)}
+                  cartItems={cartItems}
+                />
               </li>
               <li className="flex gap-4" onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)}>
                 <button className="rounded-4xl w-32 h-10 text-sm font-bold -mt-1 " style={{border:'1px solid gray'}}>

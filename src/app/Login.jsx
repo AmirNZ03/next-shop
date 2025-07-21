@@ -8,7 +8,7 @@ export default function Login({show}) {
 
 
   return (
-<div className="bg-white w-80 h-72 shadow-2xl fixed top-32 left-1/2 -translate-x-1/2 z-[9999]" >
+<div className="bg-white w-80 h-72 shadow-2xl fixed top-32 ml-48 -translate-x-1/2 z-[9999]" >
         <div className="flex flex-col">
         <div className="flex justify-between">
 <Link href='/' className='ml-3'>

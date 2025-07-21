@@ -15,16 +15,30 @@ import Image from "next/image";
 import { useState } from "react";
 import Login from "./Login";
 import CartSidebar from "./CartSidebar";
+// import { CartProvider, useCart } from "./products/[id]/detail/CartContext";
+import Navbar from "./Navbar";
+import {CartProvider ,useCart } from "./context/CartContext";
 export default function RootLayout({ children }) {
   const [show,setShow]=useState(false)
-  const [cartItems, setCartItems] = useState([
-    { name: 'محصول تست', price: 10000 }
-  ]);
+  const[cartItems,setCartItems]=useState([])
+  // const { addToCart, cartItems } = useCart();
+  const handleAddToCart = () => {
+    addToCart({
+      id: detail[0]?.id,
+      name: detail[0]?.title,
+      price: detail[0]?.price,
+      image: detail[0]?.image
+    }, changevalue);
+    setIsopen(true);
+  };
   const[isOpen,setIsopen]=useState(false)
+// const { cartItems } = useCart();
 
   return (
     <html lang="en">
       <body>
+                  <CartProvider>
+
         <header>
           <nav className="mt-10">
             <ul className="flex no-underline list-none justify-evenly ">
@@ -32,14 +46,20 @@ export default function RootLayout({ children }) {
                 <button className="bg-white w-10 h-10 rounded-full relative ml-1 mt-1" onClick={()=>setIsopen(true)} >
                   <SlBasket className="text-2xl ml-1 -mt-4 absolute" />
 <div className="bg-white top-0 left-0 -ml-2 w-4 h-4 rounded-full  absolute ">
-  <p className="text-sm   ">0</p>
+                      <p className="text-sm">{cartItems.reduce((total, item) => total + item.quantity, 0)}</p>
 </div>
                 </button>
-                <CartSidebar
-                  isOpen={isOpen}
-                  onClose={() => setIsopen(false)}
-                  cartItems={cartItems}
-                />
+                  <CartSidebar
+                                   isOpen={isOpen}
+                                   onClose={() => setIsopen(false)}
+                                   cartItems={cartItems}
+                                 />
+                
+                {/* <Navbar
+                 isOpen={isOpen}
+  onClose={() => setIsopen(false)}
+  cartItems={cartItems}
+                /> */}
               </li>
               <li className="flex gap-4" onMouseEnter={()=>setShow(true)} onMouseLeave={()=>setShow(false)}>
                 <button className="rounded-4xl w-32 h-10 text-sm font-bold -mt-1 " style={{border:'1px solid gray'}}>
@@ -87,7 +107,7 @@ export default function RootLayout({ children }) {
 </Link>
               </li>
                       <li className="flex">
-                <Link href="/">
+                <Link href="/products">
                 
                 <p className="ml-4  ">               فروشگاه
 </p>
@@ -111,7 +131,9 @@ export default function RootLayout({ children }) {
             <Login show={show} />
           </div>
         </header>
+
         {children}
+
         <footer className="w-full bg-black mt-6 z-50" style={{height:'28rem'}}>
 <div className="flex">
   <div className="flex-col ml-20 mt-10" >
@@ -239,6 +261,8 @@ export default function RootLayout({ children }) {
  
 
         </footer>
+                              </CartProvider>
+
       </body>
     </html>
   );

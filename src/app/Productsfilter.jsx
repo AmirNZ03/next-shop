@@ -31,7 +31,7 @@ export default function Productsfilter({products}) {
                     </button>
                   </div>
                 </div>
-                        <p style={{ color: "#333333" }} className="text-center text-sm font-bold">{data.title}</p>
+                        <Link style={{ color: "#333333" }} className="text-center text-sm font-bold" href={`products/${data.id}/detail`}>{data.title}</Link>
                         <div className="flex text-amber-300 justify-center mt-2">
                             <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
                         </div>

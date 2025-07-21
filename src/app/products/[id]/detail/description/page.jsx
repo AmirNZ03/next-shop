@@ -9,17 +9,23 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useParams, usePathname } from 'next/navigation';
-
+import CartSidebar from "../../../../CartSidebar"
 export default function page() {
   const [changevalue,setChangeValue]=useState(1)
   const[board,setBoard]=useState(true)
+    const[isOpen,setIsOpen]=useState(false)
+const [cartItems, setCartItems] = useState([]);
     const[product,setProduct]=useState([])
+        const[detail,setDetail]=useState([])
+
     const params = useParams();
         const pathname = usePathname();
     
 const id = params.id;
 console.log("id",id);
-
+const handleclik=()=>{
+setIsOpen(true)
+}
 
   const increase=()=>{
    setChangeValue(changevalue+1)
@@ -32,14 +38,23 @@ console.log("id",id);
     .then(res=>res.json())
     .then(data=>setProduct(data))
   },[])
+   useEffect(()=>{
+    fetch(`/api/products/?id=${id}`)
+    .then(res=>res.json())
+    .then(data=>setDetail(data))
+  },[])
   return (
     <>
     <div className='flex'>
       <div className="fle flex-col">
         <div className="flex text-sm text-gray-400 mt-16">
+          {detail.map((data)=>(
+
         <Link href='/'>
-        کپسول قهوه SETpresso سازگار با دستگاههای نسپرسو _ قرمز 10 عددی ( Sumatra ) LIMITED EDITION
+        {data.title}
         </Link>
+                  ))}
+
         /
          <Link href='/'>
          Coffee Capsule 
@@ -49,7 +64,9 @@ console.log("id",id);
         خانه 
         </Link>
         </div>
-        <p className='font-bold w-[30rem] text-right text-xl mt-7 ml-56'>کپسول قهوه SETpresso سازگار با دستگاههای نسپرسو _ قرمز 10 عددی ( Sumatra ) LIMITED EDITION
+        {detail.map((das)=>(
+<>
+        <p className='font-bold w-[30rem] text-right text-xl mt-7 ml-56'>{das.title}
 </p>
 <div className="flex gap-3 justify-end">
           <p className='text-sm text-gray-500'>
@@ -61,14 +78,19 @@ console.log("id",id);
                         </div>
                         <div className="flex font-bold text-amber-950 justify-end mt-3 text-2xl">
                         <p>تومان</p>
-                        <p>275,000 
+                        <p>{das.price}
 </p>
 </div>
+</>
+        ))}
+
 <p className=' flex text-sm text-gray-500 max-w-[43rem] text-right justify-end mt-4 ml-4'>کپسول‌ قهوه سوماترا شامل 10 کپسول قهوه 100% عربیکا از بهترین مزارع کلمبیا، اتیوپی و سوماترا است که با رست ملایم و طعم‌های متعادل تهیه شده است. این کپسول‌ها، از جمله کپسول قهوه دی‌کف و تک‌خاستگاه، با دستگاه‌های نسپرسو کاملاً سازگارند و برای اسپرسو، لونگو و نوشیدنی‌های بر پایه شیر ایده‌آل هستند.</p>
 <hr className='mt-7 text-gray-300' />
 <p className='flex justify-end mt-3'>موجود در انبار</p>
 <div className='flex gap-2 mt-9 justify-end'>
-  <button className='bg-green-600 text-white h-10 w-36 font-bold hover:bg-amber-950'>افزودن به سبد خرید</button>
+  <button className='bg-green-600 text-white h-10 w-36 font-bold hover:bg-amber-950' onClick={handleclik}>افزودن به سبد خرید</button>,
+  
+                      
   <div className="flex">
 <button className='w-6' style={{border:'1px solid gray'}}onClick={increase}>+</button>
 <input type="text" className='w-9 text-center' style={{border:'1px solid gray'}} value={changevalue<1?'1':changevalue}   readOnly
@@ -171,7 +193,7 @@ console.log("id",id);
                   
                   {/* دکمه افزودن به سبد خرید */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button className="bg-transparent text-white font-bold px-4 py-2 border border-white rounded hover:cursor-pointer">
+                    <button className="bg-transparent text-white font-bold px-4 py-2 border border-white rounded hover:cursor-pointer"  >
                       افزودن به سبد خرید
                     </button>
                   </div>
@@ -191,6 +213,12 @@ console.log("id",id);
               ))}
 
     </Swiper>
+  <CartSidebar
+                   isOpen={isOpen}
+                   onClose={() => setIsopen(false)}
+                   cartItems={cartItems}
+                 />
+
 </>
   )
 }

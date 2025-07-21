@@ -13,6 +13,7 @@ import 'swiper/css/pagination';
 import { useParams, usePathname } from 'next/navigation';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import CartSidebar from '@/app/CartSidebar';
+import { useCart } from '@/app/context/CartContext';
 
 export default function page() {
   const images = [
@@ -20,6 +21,51 @@ export default function page() {
           { id: 2, src: "/coffeered.jpg" },
           
         ];
+//    const handleAddToCart = () => {
+//       console.log("Add to cart clicked");
+
+//   setCartItems(prev => {
+//     const existingIndex = prev.findIndex(item => item.id === detail[0]?.id);
+//     if (existingIndex !== -1) {
+//       // اگر محصول وجود دارد، تعداد آن افزایش یابد
+//       const updatedCart = [...prev];
+//       updatedCart[existingIndex].quantity += changevalue;
+//       return updatedCart;
+//     } else {
+//       // اگر محصول وجود ندارد، اضافه شود
+//       return [
+//         ...prev,
+//         {
+//           id: detail[0]?.id,
+//           name: detail[0]?.title,
+//           price: detail[0]?.price,
+//           image: detail[0]?.image,
+//           quantity: changevalue,
+//         },
+//       ];
+//     }
+//   });
+//   setIsopen(true); // سایدبار باز شود
+// };
+
+
+const { addToCart, cartItems } = useCart();
+
+const handleAddToCart = () => {
+  if (!detail[0] || !detail[0]?.price) {
+    console.error("محصول آماده نیست یا قیمت ندارد، لطفا کمی صبر کنید");
+    return;
+  }
+
+  addToCart({
+    id: detail[0]?.id,
+    name: detail[0]?.title,
+  price: Number(detail[0]?.price), // تبدیل به عدد
+    image: detail[0]?.image
+  }, changevalue);
+  setIsopen(true);
+};
+
         const [index, setIndex] = useState(0);
       
         const handleBack = () => {
@@ -31,14 +77,16 @@ export default function page() {
         };
   const [changevalue,setChangeValue]=useState(1)
   const[isOpen,setIsopen]=useState(false)
+          const[detail,setDetail]=useState([])
+            const[commen,setCommen]=useState([])
+
   const[board,setBoard]=useState(true)
   const[tab,setTab]=useState('description')
     const[product,setProduct]=useState([])
     const pathname = usePathname();
-const [cartItems, setCartItems] = useState([
-  { name: 'محصول تست', price: 10000 }
-]);
 
+
+const[input,setInput]=useState(0)
     const params = useParams();
 const id = params.id;
 console.log("id",id);
@@ -54,6 +102,20 @@ console.log("id",id);
     .then(res=>res.json())
     .then(data=>setProduct(data))
   },[])
+  useEffect(()=>{
+      if (!id) return; // اگر id هنوز undefined است، API فراخوانی نشود
+
+fetch(`/api/products/${id}`)
+      .then(res=>res.json())
+      .then(data=>setDetail(data))
+    },[id])
+     useEffect(()=>{
+      if (!id) return; // اگر id هنوز undefined است، API فراخوانی نشود
+
+fetch(`/api/products/${id}/detail`)
+      .then(res=>res.json())
+      .then(data=>setCommen(data))
+    },[id])
   const comments = [
   {
     id: 1,
@@ -78,9 +140,13 @@ console.log("id",id);
     <div className='flex'>
       <div className="fle flex-col">
         <div className="flex text-sm text-gray-400 mt-16">
+                    {detail.map((data)=>(
+
         <Link href='/'>
-        کپسول قهوه SETpresso سازگار با دستگاههای نسپرسو _ قرمز 10 عددی ( Sumatra ) LIMITED EDITION
+          {data.title}
         </Link>
+                          ))}
+
         /
          <Link href='/'>
          Coffee Capsule 
@@ -90,7 +156,10 @@ console.log("id",id);
         خانه 
         </Link>
         </div>
-        <p className='font-bold w-[30rem] text-right text-xl mt-7 ml-56'>کپسول قهوه SETpresso سازگار با دستگاههای نسپرسو _ قرمز 10 عددی ( Sumatra ) LIMITED EDITION
+                {detail.map((das)=>(
+                  <>
+
+        <p className='font-bold w-[30rem] text-right text-xl mt-7 ml-56'>{das.title}
 </p>
 <div className="flex gap-3 justify-end">
           <p className='text-sm text-gray-500'>
@@ -102,19 +171,22 @@ console.log("id",id);
                         </div>
                         <div className="flex font-bold text-amber-950 justify-end mt-3 text-2xl">
                         <p>تومان</p>
-                        <p>275,000 
+                        <p>{das.price} 
 </p>
 </div>
+</>
+        ))}
+
 <p className=' flex text-sm text-gray-500 max-w-[43rem] text-right justify-end mt-4 ml-4'>کپسول‌ قهوه سوماترا شامل 10 کپسول قهوه 100% عربیکا از بهترین مزارع کلمبیا، اتیوپی و سوماترا است که با رست ملایم و طعم‌های متعادل تهیه شده است. این کپسول‌ها، از جمله کپسول قهوه دی‌کف و تک‌خاستگاه، با دستگاه‌های نسپرسو کاملاً سازگارند و برای اسپرسو، لونگو و نوشیدنی‌های بر پایه شیر ایده‌آل هستند.</p>
 <hr className='mt-7 text-gray-300' />
 <p className='flex justify-end mt-3'>موجود در انبار</p>
 <div className='flex gap-2 mt-9 justify-end'>
-  <button className='bg-green-600 text-white h-10 w-36 font-bold hover:bg-amber-950'>افزودن به سبد خرید</button>
-{/* <CartSidebar
+  <button className='bg-green-600 text-white h-10 w-36 font-bold hover:bg-amber-950' onClick={handleAddToCart}>افزودن به سبد خرید</button>
+<CartSidebar
   isOpen={isOpen}
   onClose={() => setIsopen(false)}
   cartItems={cartItems}
-/> */}
+/>
 
   <div className="flex">
 <button className='w-6' style={{border:'1px solid gray'}}onClick={increase}>+</button>
@@ -145,21 +217,27 @@ console.log("id",id);
       </div>
       <div className="flex flex-col ml-20">
       <div className="relative">
-<Image  key={images[index].id}
-              src={images[index].src} width={500} height={500}/>
- <button onClick={handleBack}>
+        {detail.map((pas)=>(
+<Image  key={pas.id}
+              src={pas.image} width={500} height={500}
+                  alt={pas.title || "product"} // اضافه شد
+
+              />
+        ))}
+
+ {/* <button onClick={handleBack}>
               <IoIosArrowBack className="absolute left-4 top-1/2 -translate-y-1/2 text-4xl text-gray-800 cursor-pointer" />
             </button>
             <button onClick={handleForward}>
               <IoIosArrowForward className="absolute right-4 top-1/2 -translate-y-1/2 text-4xl text-gray-800 cursor-pointer" />
-            </button>
+            </button> */}
 </div>
-<div className="flex ">
+{/* <div className="flex ">
 {images.map((image)=>(
 <Image  key={image.id}
               src={image.src} width={150} height={150}/>
 ))}
-</div>
+</div> */}
  </div>
     </div>
     <div className="flex justify-center mt-20 gap-10">
@@ -293,7 +371,7 @@ console.log("id",id);
       pagination={{ clickable: true }}
       loop={true}
     >
-       {product.map((data)=>(
+       {commen.map((data)=>(
       <SwiperSlide>
        
    <div  className="w-56 h-80 bg-white m-4 shadow rounded">

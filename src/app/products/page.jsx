@@ -10,7 +10,7 @@ import { FaStar } from 'react-icons/fa';
 import Products2 from '../Products2';
 import Productsfilter from '../Productsfilter';
 export default function page() {
-const [changevalue, setChangeValue] = useState([190, 280]);
+const [changevalue, setChangeValue] = useState([0, 725]);
       const [defaultvalue,setDefaultvalue]=useState(true)
       const[options,setOptions]=useState("1")
         const [products, setProducts] = useState([]);
@@ -165,8 +165,8 @@ Coffee Capsule</p>
    <div className="w-[300px] z-50 relative" >             
 <Slider
   range
-  min={190}
-  max={280}
+  min={0}
+  max={725}
     value={changevalue}    // این مهمه
 
   onChange={changehandler}

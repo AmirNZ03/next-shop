@@ -10,9 +10,8 @@ export async function GET(req) {
 
   try {
     let query = `
-      SELECT * FROM products
-      WHERE category_id = 2
-      AND CAST(REPLACE(price, ',', '') AS UNSIGNED) BETWEEN ? AND ?
+      SELECT * FROM products WHERE
+       CAST(REPLACE(price, ',', '') AS UNSIGNED) BETWEEN ? AND ?
     `;
 
     if (sort === 'asc') {

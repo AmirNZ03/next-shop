@@ -12,3 +12,13 @@
       <Image src='/user.jpg' width={15} height={15} alt='user' className='rounded-full w-12 h-12 object-cover'/>
     </div>
   </div>
+
+
+
+
+   useEffect(()=>{
+    fetch(`/api/products/?id=${id}`)
+    .then(res=>res.json())
+    .then(data=>setProduct(data))
+  },[])
+    <p>{item.price.reduce((total, itemk) => total + itemk, 0)}</p>

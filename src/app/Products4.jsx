@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
 export default async function Products4() {
@@ -34,7 +35,7 @@ export default async function Products4() {
                             </button>
                           </div>
                         </div>
-                        <p style={{ color: "#333333" }} className="text-center text-sm font-bold">{data.title}</p>
+                        <Link style={{ color: "#333333" }} className="text-center text-sm font-bold" href={`products/${data.id}/detail`}>{data.title}</Link>
                         <div className="flex text-amber-300 justify-center mt-2">
                             <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
                         </div>

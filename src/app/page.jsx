@@ -111,7 +111,12 @@ export default  function Home() {
     <h4 className="text-amber-950 font-bold text-4xl mt-8" style={{marginLeft:'27rem'}}>چرا قهوه ست</h4>
     <p className="text-sm text-right max-w-96 text-gray-500 ml-60 mt-10">برخورداری از تجربه و قدمت کافی و آگاهی از ذایقه مصرف کنندگان راهنمای ما در برآورده ساختن نیاز مشتریان قهوه تخصصی (موج سوم) است .تجربه ای به قدمت چهار نسل و ارتباط مستمر با مصرف کنندگان قهوه ضامن این ویژگیها است.</p>
     <div className="flex col ml-96 mt-4 " style={{flexDirection:'column' }}>
-    <button className="w-24 h-10" style={{border:'1px solid gray'}}>فروشگاه</button>
+    <button className="w-24 h-10" style={{border:'1px solid gray'}}
+    
+    >
+<Link href="/products">      فروشگاه
+</Link>
+    </button>
     <button className="w-24 h-10 text-white bg-amber-950 mt-5">بیشتر بخوانید</button>
     </div>
   </div>

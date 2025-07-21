@@ -3,11 +3,8 @@ import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
 export default async function Products3() {
-  const BASE_URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:3000"
-    : process.env.NEXT_PUBLIC_SITE_URL;
-    const res = await fetch(`${BASE_URL}/api/products/pro3`, { cache: "no-store" });
+
+    const res = await fetch(`/api/products/pro3`, { cache: "no-store" });
     const datas = await res.json();
 
     return (

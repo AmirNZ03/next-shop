@@ -178,10 +178,10 @@ Coffee Capsule</p>
   فیلتر
 </button> */}
 <p>تومان</p> 
-<p>{defaultvalue?"190,000":changevalue[0].toLocaleString()+',000'}</p> 
+<p>{defaultvalue?"0":changevalue[0].toLocaleString()+',000'}</p> 
 <hr className="w-full my-2 border-b border-gray-400" />  
 <p>تومان</p> 
-<p>{defaultvalue?"280,000":changevalue[1].toLocaleString()+',000'}</p> 
+<p>{defaultvalue?"725,000":changevalue[1].toLocaleString()+',000'}</p> 
 <p>:قیمت</p>
 </div>
 <h3 className='font-bold text-right mr-3 mt-12'>برترین محصولات</h3>
